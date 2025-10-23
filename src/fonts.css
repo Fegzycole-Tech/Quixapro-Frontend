@@ -14,7 +14,6 @@
   font-display: swap;
 }
 
-/* Regular */
 @font-face {
   font-family: 'Helvetica Neue';
   src: url('/fonts/HelveticaNeueRoman.otf') format('opentype');
@@ -31,7 +30,6 @@
   font-display: swap;
 }
 
-/* Medium */
 @font-face {
   font-family: 'Helvetica Neue';
   src: url('/fonts/HelveticaNeueMedium.otf') format('opentype');
@@ -61,5 +59,13 @@
   src: url('/fonts/HelveticaNeueBoldItalic.otf') format('opentype');
   font-weight: 700;
   font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Recoleta Alt';
+  src: url('/fonts/recoleta-alt.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
   font-display: swap;
 }
