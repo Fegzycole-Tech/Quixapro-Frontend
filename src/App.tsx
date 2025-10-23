@@ -1,5 +1,8 @@
+import { useRoutes } from 'react-router';
+import { routes } from './routes';
+
 function App() {
-  return <div></div>;
+  return useRoutes(routes);
 }
 
 export default App;
