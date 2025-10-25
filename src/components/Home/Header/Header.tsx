@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import QuixaproBillLogoLight from '../../../assets/QuickBillLogoLight.png';
+import QuixaproBillLogoLight from '@/assets/QuickBillLogoLight.png';
 
 export const Header = () => {
   return (

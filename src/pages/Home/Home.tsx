@@ -1,5 +1,5 @@
-import { Background, Header, HeroSection, ServicesSection } from '../../components/Home';
-import { PageContainer } from '../../components/Layout';
+import { Background, Header, HeroSection, ServicesSection } from '@/components/Home';
+import { PageContainer } from '@/components/Layout';
 
 function Home() {
   return (

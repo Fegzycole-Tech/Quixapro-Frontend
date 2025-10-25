@@ -1,8 +1,8 @@
-import invoiceImg from '../../../assets/invoice.svg';
-import editTableImg from '../../../assets/edit-table.svg';
-import sentImg from '../../../assets/sent.svg';
-import briefcaseImg from '../../../assets/briefcase.svg';
-import { ServiceCard } from '../ServiceCard/ServiceCard';
+import invoiceImg from '@/assets/invoice.svg';
+import editTableImg from '@/assets/edit-table.svg';
+import sentImg from '@/assets/sent.svg';
+import briefcaseImg from '@/assets/briefcase.svg';
+import { ServiceCard } from '@/components/Home/ServiceCard/ServiceCard';
 
 export const ServicesSection = () => {
   const services = [
