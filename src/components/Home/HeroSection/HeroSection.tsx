@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button';
+
 export const HeroSection = () => {
   return (
     <section className="relative flex flex-col justify-center items-center text-center px-6 py-12">
@@ -11,23 +13,15 @@ export const HeroSection = () => {
           in minutes
         </p>
 
-        <div
-          className="relative inline-flex rounded-full transition-all duration-300"
-          style={{
-            background:
-              'linear-gradient(90deg, #ec4899 0%, #8b5cf6 50%, #60a5fa 100%)',
-            padding: '2px',
-            boxShadow: '0 6px 20px rgba(139,92,246,0.12)',
-          }}
-        >
-          <div className="rounded-full w-full h-full bg-[#0a0a0f]">
-            <button
-              className="px-6 py-2.5 w-[170px] cursor-pointer h-full rounded-full bg-[#0a0a0f] hover:bg-[#0a0a0f]/80 text-white text-sm font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400"
-              aria-label="Get Started"
+        <div className="relative inline-block">
+          <div className="absolute inset-0 rounded-full animate-gradient-border"></div>
+          <div className="relative m-[2px] rounded-full bg-[#0a0a0f]">
+            <Button
+              className="w-[170px] rounded-full bg-[#0a0a0f] hover:bg-[#0a0a0f]/80 text-white shadow-[0_6px_20px_rgba(139,92,246,0.12)]"
               type="button"
             >
               Get Started
-            </button>
+            </Button>
           </div>
         </div>
       </div>

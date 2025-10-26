@@ -121,3 +121,39 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes gradient-border-rotate {
+  0% {
+    background: linear-gradient(90deg, #ec4899, #8b5cf6, #60a5fa);
+  }
+  12.5% {
+    background: linear-gradient(135deg, #ec4899, #8b5cf6, #60a5fa);
+  }
+  25% {
+    background: linear-gradient(180deg, #ec4899, #8b5cf6, #60a5fa);
+  }
+  37.5% {
+    background: linear-gradient(225deg, #ec4899, #8b5cf6, #60a5fa);
+  }
+  50% {
+    background: linear-gradient(270deg, #ec4899, #8b5cf6, #60a5fa);
+  }
+  62.5% {
+    background: linear-gradient(315deg, #ec4899, #8b5cf6, #60a5fa);
+  }
+  75% {
+    background: linear-gradient(0deg, #ec4899, #8b5cf6, #60a5fa);
+  }
+  87.5% {
+    background: linear-gradient(45deg, #ec4899, #8b5cf6, #60a5fa);
+  }
+  100% {
+    background: linear-gradient(90deg, #ec4899, #8b5cf6, #60a5fa);
+  }
+}
+
+@layer utilities {
+  .animate-gradient-border {
+    animation: gradient-border-rotate 2s ease-in-out infinite;
+  }
+}
