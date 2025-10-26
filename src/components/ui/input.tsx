@@ -23,7 +23,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             data-slot="input"
             className={cn(
               "w-full min-w-0 rounded-md border outline-none transition-[color,box-shadow,border-color]",
-              "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+              "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 pt-1",
               leftIcon && "pl-9",
               rightIcon && "pr-9",
               !leftIcon && !rightIcon && "px-3",

@@ -31,7 +31,7 @@ export const AuthHeader = ({
   return (
     <Header
       className="bg-primary dark:bg-[#1E2139]"
-      brandClassName="font-bold text-xl"
+      brandClassName="font-bold text-2xl"
       links={links}
       rightContent={<ThemeToggle />}
     />

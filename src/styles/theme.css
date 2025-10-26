@@ -48,4 +48,6 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-footer-text: var(--footer-text);
   --color-brand-text: var(--brand-text);
+  --color-progress-empty: var(--progress-empty);
+  --color-text-secondary: var(--text-secondary);
 }

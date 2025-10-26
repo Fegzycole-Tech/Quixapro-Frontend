@@ -9,11 +9,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AuthContainer } from '@/components/AuthContainer';
+import { PasswordStrengthChecker } from '@/components/PasswordStrengthChecker';
 import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import registerImg from '@/assets/register.svg';
 
@@ -41,6 +41,8 @@ export const SignupForm = () => {
 
   const iconClassName = 'text-muted-foreground';
 
+  const password = form.watch('password');
+
   return (
     <AuthContainer
       icon={<img src={registerImg} alt="Register" className="w-6 h-6" />}
@@ -52,7 +54,7 @@ export const SignupForm = () => {
       showSocialLogin
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3" autoComplete="off">
           <FormField
             control={form.control}
             name="fullName"
@@ -67,6 +69,7 @@ export const SignupForm = () => {
                     placeholder="Enter your full name"
                     leftIcon={<User size={16} className={iconClassName} />}
                     className={inputClassName}
+                    autoComplete="nope"
                     {...field}
                   />
                 </FormControl>
@@ -89,6 +92,7 @@ export const SignupForm = () => {
                     placeholder="example@email.com"
                     leftIcon={<Mail size={16} className={iconClassName} />}
                     className={inputClassName}
+                    autoComplete="nope"
                     {...field}
                   />
                 </FormControl>
@@ -124,17 +128,16 @@ export const SignupForm = () => {
                       </button>
                     }
                     className={inputClassName}
+                    autoComplete="new-password"
                     {...field}
                   />
                 </FormControl>
-                <FormDescription className="text-xs text-muted-foreground">
-                  Must contain 8 characters, 1 uppercase, 1 lowercase and 1
-                  number
-                </FormDescription>
                 <FormMessage className="text-destructive text-xs opacity-80" />
               </FormItem>
             )}
           />
+
+          {password && <PasswordStrengthChecker password={password} />}
 
           <FormField
             control={form.control}
@@ -165,6 +168,7 @@ export const SignupForm = () => {
                       </button>
                     }
                     className={inputClassName}
+                    autoComplete="new-password"
                     {...field}
                   />
                 </FormControl>

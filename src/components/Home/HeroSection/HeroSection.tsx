@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router';
 
 export const HeroSection = () => {
   return (
@@ -15,12 +16,12 @@ export const HeroSection = () => {
 
         <div className="relative inline-block">
           <div className="absolute inset-0 rounded-full animate-gradient-border"></div>
-          <div className="relative m-[2px] rounded-full bg-[#0a0a0f]">
+          <div className="relative m-0.5 rounded-full bg-[#0a0a0f]">
             <Button
-              className="w-[170px] rounded-full bg-[#0a0a0f] hover:bg-[#0a0a0f]/80 text-white shadow-[0_6px_20px_rgba(139,92,246,0.12)]"
-              type="button"
+              className="w-[170px] rounded-full bg-[#0a0a0f] hover:bg-[#0a0a0f]/80 text-white shadow-[0_6px_20px_rgba(139,92,246,0.12)] cursor-pointer"
+              asChild
             >
-              Get Started
+              <Link to="/signup">Get Started</Link>
             </Button>
           </div>
         </div>

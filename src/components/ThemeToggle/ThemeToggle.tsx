@@ -7,7 +7,7 @@ export const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="relative inline-flex items-center justify-center w-12 h-12 rounded-lg bg-bg-secondary hover:bg-bg-tertiary transition-colors duration-200 text-white cursor-pointer"
+      className="relative inline-flex items-center justify-center rounded-lg bg-bg-secondary hover:bg-bg-tertiary transition-colors duration-200 text-white cursor-pointer"
       aria-label="Toggle theme"
     >
       <Sun

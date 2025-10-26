@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 
 import googleImg from '@/assets/google.svg';
 import { AuthIcon } from '../AuthIcon';
+import { Button } from '@/components/ui/button';
 
 interface AuthContainerProps {
   icon: ReactNode;
@@ -23,20 +24,20 @@ export const AuthContainer = ({
   footerText,
   footerLinkText,
   footerLinkHref,
-  showSocialLogin = true,
+  showSocialLogin = false,
 }: AuthContainerProps) => {
   return (
     <div className="flex items-start justify-center pt-8 pb-4 px-4 sm:px-6 lg:px-8 overflow-y-auto h-full">
       <div className="max-w-md w-full space-y-5 rounded-lg shadow-sm p-4 bg-card">
         <div className="text-center">
           <AuthIcon icon={icon} />
-          <h2 className="text-xl font-semibold">{title}</h2>
-          <p className="mt-0.5 text-xs">{subtitle}</p>
+          <h2 className="text-2xl font-semibold">{title}</h2>
+          <p className="mt-0.5 text-sm">{subtitle}</p>
         </div>
 
         <div className="mt-4">{children}</div>
 
-        <div className="text-center text-xs">
+        <div className="text-center text-sm">
           <span className="">{footerText} </span>
           <Link to={footerLinkHref} className="font-semibold">
             {footerLinkText}
@@ -46,13 +47,14 @@ export const AuthContainer = ({
         {showSocialLogin && (
           <>
             <div className="space-y-3">
-              <button
+              <Button
                 type="button"
-                className="w-full flex items-center justify-center gap-3 px-4 py-2 border rounded-md shadow-sm text-sm font-medium"
+                variant="outline"
+                className="w-full hover:bg-background hover:text-foreground dark:hover:bg-input/30 dark:hover:text-foreground items-center"
               >
-                <img src={googleImg} alt="Google svg icon" />
-                Continue with Google
-              </button>
+                <img src={googleImg} alt="Google svg icon"  />
+                <span className="mt-1">Continue with Google</span>
+              </Button>
             </div>
           </>
         )}

@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from 'react-router';
-import { loginSchema, type LoginInput } from '@/lib/validations/auth';
+import {
+  resetPasswordSchema,
+  type ResetPasswordInput,
+} from '@/lib/validations/auth';
 import {
   Form,
   FormControl,
@@ -13,25 +15,28 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { AuthContainer } from '@/components/AuthContainer';
-import { Mail, Lock, Eye, EyeOff, LogIn } from 'lucide-react';
+import { PasswordStrengthChecker } from '@/components/PasswordStrengthChecker';
+import { Lock, Eye, EyeOff } from 'lucide-react';
 
-export const LoginForm = () => {
+export const ResetPasswordForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const form = useForm<LoginInput>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<ResetPasswordInput>({
+    resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: '',
       password: '',
-      keepLoggedIn: false,
+      confirmPassword: '',
     },
   });
 
-  const onSubmit = (data: LoginInput) => {
-    // API logic will be added here later
-    console.log(data);
+  const onSubmit = (data: ResetPasswordInput) => {
+    console.log('Reset password data:', data);
+  };
+
+  const handleDiscard = () => {
+    form.reset();
   };
 
   const inputClassName =
@@ -39,48 +44,27 @@ export const LoginForm = () => {
 
   const iconClassName = 'text-muted-foreground';
 
+  const password = form.watch('password');
+
   return (
     <AuthContainer
-      icon={<LogIn size={28} className="text-[#525866]" strokeWidth={2.5} />}
-      title="Login to your account"
-      subtitle="Get your invoices on the go"
-      footerText="Don't have an Account?"
-      footerLinkText="Sign Up"
-      footerLinkHref="/signup"
-      showSocialLogin={true}
+      icon={<Lock size={24} strokeWidth={2.5} className="text-[#525866]" />}
+      title="Reset Password"
+      subtitle="Reset your password and try to log in again."
+      footerText=""
+      footerLinkText=""
+      footerLinkHref=""
+      showSocialLogin={false}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3" autoComplete="off">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="data-[error=true]:text-destructive">
-                  Email Address
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="example@email.com"
-                    leftIcon={<Mail size={16} className={iconClassName} />}
-                    className={inputClassName}
-                    autoComplete="nope"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-destructive text-xs opacity-80" />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="data-[error=true]:text-destructive">
-                  Password
+                  New Password
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -110,32 +94,59 @@ export const LoginForm = () => {
             )}
           />
 
-          <div className="flex items-center justify-between">
-            <FormField
-              control={form.control}
-              name="keepLoggedIn"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center space-y-0">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormLabel className="text-sm font-normal data-[error=true]:text-destructive mt-1">
-                    Keep me Signed in
-                  </FormLabel>
-                </FormItem>
-              )}
-            />
-            <Link to="/forgot-password" className="text-sm mt-1">
-              Forgot password?
-            </Link>
-          </div>
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="data-[error=true]:text-destructive">
+                  Confirm New Password
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    placeholder="••••••••"
+                    leftIcon={<Lock size={16} className={iconClassName} />}
+                    rightIcon={
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                        className="cursor-pointer"
+                      >
+                        {showConfirmPassword ? (
+                          <EyeOff size={16} className={iconClassName} />
+                        ) : (
+                          <Eye size={16} className={iconClassName} />
+                        )}
+                      </button>
+                    }
+                    className={inputClassName}
+                    autoComplete="new-password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-destructive text-xs opacity-80" />
+              </FormItem>
+            )}
+          />
 
-          <Button type="submit" className="w-full cursor-pointer">
-            Login
-          </Button>
+          {password && <PasswordStrengthChecker password={password} />}
+
+          <div className="flex gap-3 pt-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="flex-1"
+              onClick={handleDiscard}
+            >
+              Discard
+            </Button>
+            <Button type="submit" className="flex-1">
+              Apply Changes
+            </Button>
+          </div>
         </form>
       </Form>
     </AuthContainer>
