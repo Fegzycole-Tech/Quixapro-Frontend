@@ -1,4 +1,4 @@
-import bgImage from '../../../assets/QuickBillBg.jpg';
+import bgImage from '@/assets/QuickBillBg.jpg';
 
 export const Background = () => {
   return (
