@@ -7,17 +7,21 @@ export const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="relative inline-flex items-center justify-center w-12 h-12 rounded-lg bg-bg-secondary hover:bg-bg-tertiary transition-colors duration-200 border border-border-primary"
+      className="relative inline-flex items-center justify-center w-12 h-12 rounded-lg bg-bg-secondary hover:bg-bg-tertiary transition-colors duration-200 text-white cursor-pointer"
       aria-label="Toggle theme"
     >
       <Sun
         className={`absolute w-5 h-5 text-text-primary transition-all duration-300 ${
-          theme === 'light' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-0'
+          theme === 'light'
+            ? 'opacity-100 rotate-0 scale-100'
+            : 'opacity-0 rotate-90 scale-0'
         }`}
       />
       <Moon
         className={`absolute w-5 h-5 text-text-primary transition-all duration-300 ${
-          theme === 'dark' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'
+          theme === 'dark'
+            ? 'opacity-100 rotate-0 scale-100'
+            : 'opacity-0 -rotate-90 scale-0'
         }`}
       />
     </button>

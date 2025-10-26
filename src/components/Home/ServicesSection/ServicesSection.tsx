@@ -20,7 +20,7 @@ export const ServicesSection = () => {
     },
     {
       icon: <img src={briefcaseImg} />,
-      title: 'Multiple Business Profile',
+      title: 'Multiple Business Profiles',
     },
   ];
 
