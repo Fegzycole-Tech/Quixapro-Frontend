@@ -14,12 +14,15 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AuthContainer } from '@/components/AuthContainer';
 import { PasswordStrengthChecker } from '@/components/PasswordStrengthChecker';
+import { useSignup } from '@/hooks/useSignup';
 import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import registerImg from '@/assets/register.svg';
 
 export const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const { mutate: signup, isPending, isError, error } = useSignup();
 
   const form = useForm<SignupInput>({
     resolver: zodResolver(signupSchema),
@@ -32,8 +35,7 @@ export const SignupForm = () => {
   });
 
   const onSubmit = (data: SignupInput) => {
-    // API logic will be added here later
-    console.log(data);
+    signup(data);
   };
 
   const inputClassName =
@@ -55,6 +57,11 @@ export const SignupForm = () => {
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3" autoComplete="off">
+          {isError && (
+            <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md border border-destructive/20">
+              {error?.message || 'An error occurred during signup'}
+            </div>
+          )}
           <FormField
             control={form.control}
             name="fullName"
@@ -177,8 +184,8 @@ export const SignupForm = () => {
             )}
           />
 
-          <Button type="submit" className="w-full">
-            Sign Up
+          <Button type="submit" className="w-full" disabled={isPending}>
+            {isPending ? 'Creating account...' : 'Sign Up'}
           </Button>
         </form>
       </Form>
