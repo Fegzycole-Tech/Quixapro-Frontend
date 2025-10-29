@@ -184,8 +184,8 @@ export const SignupForm = () => {
             )}
           />
 
-          <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? 'Creating account...' : 'Sign Up'}
+          <Button type="submit" className="w-full" loading={isPending}>
+            Sign Up
           </Button>
         </form>
       </Form>

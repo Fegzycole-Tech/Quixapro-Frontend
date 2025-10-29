@@ -15,10 +15,13 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AuthContainer } from '@/components/AuthContainer';
+import { useLogin } from '@/hooks/useLogin';
 import { Mail, Lock, Eye, EyeOff, LogIn } from 'lucide-react';
 
 export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const { mutate: login, isPending, isError, error } = useLogin();
 
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -30,8 +33,7 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (data: LoginInput) => {
-    // API logic will be added here later
-    console.log(data);
+    login(data);
   };
 
   const inputClassName =
@@ -50,7 +52,16 @@ export const LoginForm = () => {
       showSocialLogin={true}
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3" autoComplete="off">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-3"
+          autoComplete="off"
+        >
+          {isError && (
+            <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md border border-destructive/20">
+              {error?.message || 'Invalid email or password'}
+            </div>
+          )}
           <FormField
             control={form.control}
             name="email"
@@ -133,7 +144,11 @@ export const LoginForm = () => {
             </Link>
           </div>
 
-          <Button type="submit" className="w-full cursor-pointer">
+          <Button
+            type="submit"
+            className="w-full cursor-pointer"
+            loading={isPending}
+          >
             Login
           </Button>
         </form>

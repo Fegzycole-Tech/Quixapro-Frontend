@@ -12,10 +12,25 @@ import {
 import { Button } from '@/components/ui/button';
 import { AuthContainer } from '@/components/AuthContainer';
 import { useRequireValidEmail } from '@/hooks/useRequireValidEmail';
+import { useVerifyCode } from '@/hooks/useVerifyCode';
+import { useResendVerification } from '@/hooks/useResendVerification';
 import mailCheckFillImg from '@/assets/mail-check-fill.svg';
 
 export const VerifyForm = () => {
   const email = useRequireValidEmail({ redirectTo: '/signup' });
+
+  const {
+    mutate: verifyCodeMutation,
+    isPending: isVerifying,
+    isError: isVerifyError,
+    error: verifyError,
+  } = useVerifyCode();
+  const {
+    mutate: resendVerificationMutation,
+    isPending: isResending,
+    isSuccess: isResendSuccess,
+  } = useResendVerification();
+
   const inputRefs = [
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
@@ -70,11 +85,16 @@ export const VerifyForm = () => {
   };
 
   const onSubmit = (data: VerifyCodeInput) => {
-    console.log('Verification code:', data);
+    if (!email) return;
+    verifyCodeMutation({
+      email,
+      code: data.code,
+    });
   };
 
   const handleResendCode = () => {
-    console.log('Resending code to:', email);
+    if (!email) return;
+    resendVerificationMutation({ email });
   };
 
   if (!email) return null;
@@ -91,6 +111,19 @@ export const VerifyForm = () => {
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          {isVerifyError && (
+            <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md border border-destructive/20">
+              {verifyError?.message ||
+                'Invalid verification code. Please try again.'}
+            </div>
+          )}
+
+          {isResendSuccess && (
+            <div className="p-3 text-sm text-green-700 bg-green-100 dark:text-green-400 dark:bg-green-900/20 rounded-md border border-green-200 dark:border-green-800">
+              Verification code has been resent to your email.
+            </div>
+          )}
+
           <FormField
             control={form.control}
             name="code"
@@ -111,7 +144,8 @@ export const VerifyForm = () => {
                         }
                         onKeyDown={(e) => handleKeyDown(index, e)}
                         onPaste={handlePaste}
-                        className="w-[calc(25%-9px)] h-14 text-center text-2xl font-semibold border border-input rounded-md bg-inherit shadow-xs focus-visible:border-primary focus-visible:ring-primary/20 focus-visible:ring-2 outline-none transition-[border-color,box-shadow]"
+                        disabled={isVerifying}
+                        className="w-[calc(25%-9px)] h-14 text-center text-2xl font-semibold border border-input rounded-md bg-inherit shadow-xs focus-visible:border-primary focus-visible:ring-primary/20 focus-visible:ring-2 outline-none transition-[border-color,box-shadow] disabled:opacity-50 disabled:cursor-not-allowed"
                       />
                     ))}
                   </div>
@@ -121,7 +155,7 @@ export const VerifyForm = () => {
             )}
           />
 
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" loading={isVerifying}>
             Submit Code
           </Button>
 
@@ -130,9 +164,10 @@ export const VerifyForm = () => {
             <button
               type="button"
               onClick={handleResendCode}
-              className="font-semibold text-foreground hover:text-primary transition-colors cursor-pointer"
+              disabled={isResending}
+              className="font-semibold text-foreground hover:text-primary transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Resend code
+              {isResending ? 'Resending...' : 'Resend code'}
             </button>
           </div>
         </form>
