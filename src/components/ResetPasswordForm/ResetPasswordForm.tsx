@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams, useNavigate } from 'react-router';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   resetPasswordSchema,
@@ -17,11 +18,19 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AuthContainer } from '@/components/AuthContainer';
 import { PasswordStrengthChecker } from '@/components/PasswordStrengthChecker';
-import { Lock, Eye, EyeOff } from 'lucide-react';
+import { Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { useResetPassword } from '@/hooks/useResetPassword';
 
 export const ResetPasswordForm = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const email = searchParams.get('email');
+  const token = searchParams.get('token');
+
+  const resetPasswordMutation = useResetPassword({ email, token });
 
   const form = useForm<ResetPasswordInput>({
     resolver: zodResolver(resetPasswordSchema),
@@ -31,8 +40,15 @@ export const ResetPasswordForm = () => {
     },
   });
 
+  useEffect(() => {
+    if (!email || !token) {
+      // Could redirect to forgot-password page or show an error
+      console.error('Invalid reset password link');
+    }
+  }, [email, token]);
+
   const onSubmit = (data: ResetPasswordInput) => {
-    console.log('Reset password data:', data);
+    resetPasswordMutation.mutate(data);
   };
 
   const handleDiscard = () => {
@@ -46,6 +62,33 @@ export const ResetPasswordForm = () => {
 
   const password = form.watch('password');
 
+  if (!email || !token) {
+    return (
+      <AuthContainer
+        icon={<AlertCircle size={24} className="text-destructive" />}
+        title="Invalid Link"
+        subtitle="This password reset link is invalid or has expired."
+        footerText=""
+        footerLinkText=""
+        footerLinkHref=""
+        showSocialLogin={false}
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-muted-foreground text-center">
+            Please request a new password reset link.
+          </p>
+          <Button
+            type="button"
+            className="w-full"
+            onClick={() => navigate('/forgot-password')}
+          >
+            Request New Link
+          </Button>
+        </div>
+      </AuthContainer>
+    );
+  }
+
   return (
     <AuthContainer
       icon={<Lock size={24} strokeWidth={2.5} className="text-[#525866]" />}
@@ -58,6 +101,16 @@ export const ResetPasswordForm = () => {
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3" autoComplete="off">
+          {resetPasswordMutation.isError && (
+            <div className="p-3 rounded-md bg-destructive/10 border border-destructive/20">
+              <p className="text-sm text-destructive">
+                {resetPasswordMutation.error instanceof Error
+                  ? resetPasswordMutation.error.message
+                  : 'An error occurred. Please try again.'}
+              </p>
+            </div>
+          )}
+
           <FormField
             control={form.control}
             name="password"
@@ -86,6 +139,7 @@ export const ResetPasswordForm = () => {
                     }
                     className={inputClassName}
                     autoComplete="new-password"
+                    disabled={resetPasswordMutation.isPending}
                     {...field}
                   />
                 </FormControl>
@@ -124,6 +178,7 @@ export const ResetPasswordForm = () => {
                     }
                     className={inputClassName}
                     autoComplete="new-password"
+                    disabled={resetPasswordMutation.isPending}
                     {...field}
                   />
                 </FormControl>
@@ -140,10 +195,15 @@ export const ResetPasswordForm = () => {
               variant="outline"
               className="flex-1"
               onClick={handleDiscard}
+              disabled={resetPasswordMutation.isPending}
             >
               Discard
             </Button>
-            <Button type="submit" className="flex-1">
+            <Button
+              type="submit"
+              className="flex-1"
+              loading={resetPasswordMutation.isPending}
+            >
               Apply Changes
             </Button>
           </div>
