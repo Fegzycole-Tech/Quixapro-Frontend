@@ -123,3 +123,29 @@ export async function resetPassword(data: ResetPasswordRequest): Promise<ResetPa
     body: JSON.stringify(data),
   });
 }
+
+export interface GoogleAuthRequest {
+  access_token: string;
+}
+
+export interface GoogleAuthResponse {
+  user: {
+    id: number;
+    email: string;
+    name: string;
+    photo_url: string | null;
+    email_verified: boolean;
+    created_at: string;
+    updated_at: string;
+  };
+  access_token: string;
+  refresh_token: string;
+  message: string;
+}
+
+export async function googleAuth(data: GoogleAuthRequest): Promise<GoogleAuthResponse> {
+  return apiClient<GoogleAuthResponse>('/auth/google/', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
