@@ -149,3 +149,18 @@ export async function googleAuth(data: GoogleAuthRequest): Promise<GoogleAuthRes
     body: JSON.stringify(data),
   });
 }
+
+export interface LogoutRequest {
+  refresh_token: string;
+}
+
+export interface LogoutResponse {
+  message: string;
+}
+
+export async function logout(data: LogoutRequest): Promise<LogoutResponse> {
+  return apiClient<LogoutResponse>('/auth/logout', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
