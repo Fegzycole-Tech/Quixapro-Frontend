@@ -91,7 +91,7 @@ export const Sidebar = ({
 
       <aside
         className={cn(
-          'w-64 h-screen bg-card border-r border-border flex flex-col',
+          'w-64 h-dvh md:h-screen bg-card border-r border-border flex flex-col',
           'fixed md:static top-0 left-0 z-50 transition-transform duration-300',
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
           className
@@ -120,7 +120,7 @@ export const Sidebar = ({
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto py-6 px-4 dark:bg-background space-y-8 min-h-0">
+        <div className="flex-1 overflow-y-auto py-6 px-4 dark:bg-background space-y-8 min-h-0 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
           <SidebarNavSection title="Main" items={mainNavItems} />
           <SidebarNavSection title="Other" items={otherNavItems} />
         </div>
