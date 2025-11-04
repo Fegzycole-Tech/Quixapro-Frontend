@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router';
 import { Sidebar } from '@/components/Sidebar';
 import { AppHeader } from '@/components/AppHeader';
@@ -10,12 +10,17 @@ export const AuthenticatedLayout = () => {
   const location = useLocation();
   const { data, isLoading, isError } = useUserProfile();
   const logoutMutation = useLogout();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (isError) {
       navigate('/login');
     }
   }, [isError, navigate]);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     const refreshToken = localStorage.getItem('refresh_token');
@@ -61,10 +66,15 @@ export const AuthenticatedLayout = () => {
         userEmail={user.email}
         userAvatar={user.photo_url || undefined}
         onLogout={handleLogout}
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
       />
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <AppHeader pageTitle={getPageTitle()} />
+        <AppHeader
+          pageTitle={getPageTitle()}
+          onMenuClick={() => setIsMobileMenuOpen(true)}
+        />
 
         <main className="flex-1 overflow-y-auto">
           <Outlet />

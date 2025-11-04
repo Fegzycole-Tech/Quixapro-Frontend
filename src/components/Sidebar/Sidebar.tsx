@@ -7,11 +7,13 @@ import {
   HeadphonesIcon,
   LogOut,
   ChevronRight,
+  X,
 } from 'lucide-react';
 import { useAppStore } from '@/store/use-app-store';
 import QuixaproLogoLight from '@/assets/QuixaproLogoLight.svg';
 import QuixaproLogoDark from '@/assets/QuixaproLogoDark.svg';
 import Avatar from 'boring-avatars';
+import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,6 +33,8 @@ interface SidebarProps {
   userEmail?: string;
   userAvatar?: string;
   onLogout?: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
   className?: string;
 }
 
@@ -39,6 +43,8 @@ export const Sidebar = ({
   userEmail = 'arthur@alignui.com',
   userAvatar,
   onLogout,
+  isOpen = false,
+  onClose,
   className = '',
 }: SidebarProps) => {
   const { theme } = useAppStore();
@@ -80,21 +86,45 @@ export const Sidebar = ({
   ];
 
   return (
-    <aside
-      className={`w-64 h-screen bg-card border-r border-border flex flex-col ${className}`}
-    >
-      <div className="p-5 border-b border-border">
-        <div className="flex items-center justify-center gap-2">
-          <img
-            src={theme === 'dark' ? QuixaproLogoLight : QuixaproLogoDark}
-            alt="Quixapro Logo"
-            className="w-8 h-8"
-          />
-          <h2 className="text-xl text-primary font-recoleta font-extrabold dark:text-white">
-            Quixapro
-          </h2>
+    <>
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+      )}
+
+      <aside
+        className={cn(
+          'w-64 h-screen bg-card border-r border-border flex flex-col',
+          'fixed md:static top-0 left-0 z-50 transition-transform duration-300',
+          isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
+          className
+        )}
+      >
+        <div className="md:hidden flex justify-end p-4">
+          <button
+            onClick={onClose}
+            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            aria-label="Close menu"
+          >
+            <X className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+          </button>
         </div>
-      </div>
+
+        <div className="p-5 border-b border-border">
+          <div className="flex items-center justify-center gap-2">
+            <img
+              src={theme === 'dark' ? QuixaproLogoLight : QuixaproLogoDark}
+              alt="Quixapro Logo"
+              className="w-8 h-8"
+            />
+            <h2 className="text-xl text-primary font-recoleta font-extrabold dark:text-white">
+              Quixapro
+            </h2>
+          </div>
+        </div>
 
       <div className="flex-1 overflow-y-auto py-6 px-4 dark:bg-background space-y-8">
         <SidebarNavSection title="Main" items={mainNavItems} />
@@ -150,5 +180,6 @@ export const Sidebar = ({
         </DropdownMenu>
       </div>
     </aside>
+    </>
   );
 };
