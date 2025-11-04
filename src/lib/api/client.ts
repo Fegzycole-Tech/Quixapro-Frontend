@@ -12,18 +12,37 @@ export class ApiError extends Error {
   }
 }
 
-export async function apiClient<T>(
+function getAccessToken(): string | null {
+  return localStorage.getItem('auth_token') || sessionStorage.getItem('auth_token');
+}
+
+interface ApiClientOptions extends RequestInit {
+  authenticated?: boolean;
+}
+
+async function baseApiClient<T>(
   endpoint: string,
-  options?: RequestInit
+  options?: ApiClientOptions
 ): Promise<T> {
+  const { authenticated = false, ...fetchOptions } = options || {};
   const url = `${API_BASE_URL}${endpoint}`;
 
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    ...(fetchOptions.headers as Record<string, string>),
+  };
+
+  if (authenticated) {
+    const token = getAccessToken();
+    if (!token) {
+      throw new ApiError('No authentication token found', 401);
+    }
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   const response = await fetch(url, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options?.headers,
-    },
+    ...fetchOptions,
+    headers,
   });
 
   if (!response.ok) {
@@ -36,4 +55,18 @@ export async function apiClient<T>(
   }
 
   return response.json();
+}
+
+export async function apiClient<T>(
+  endpoint: string,
+  options?: RequestInit
+): Promise<T> {
+  return baseApiClient<T>(endpoint, { ...options, authenticated: false });
+}
+
+export async function authenticatedApiClient<T>(
+  endpoint: string,
+  options?: RequestInit
+): Promise<T> {
+  return baseApiClient<T>(endpoint, { ...options, authenticated: true });
 }
