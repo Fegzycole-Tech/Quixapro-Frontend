@@ -97,7 +97,7 @@ export const Sidebar = ({
           className
         )}
       >
-        <div className="md:hidden flex justify-end p-4">
+        <div className="md:hidden flex justify-end p-4 shrink-0">
           <button
             onClick={onClose}
             className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -107,7 +107,7 @@ export const Sidebar = ({
           </button>
         </div>
 
-        <div className="p-5 border-b border-border">
+        <div className="p-5 border-b border-border shrink-0">
           <div className="flex items-center justify-center gap-2">
             <img
               src={theme === 'dark' ? QuixaproLogoLight : QuixaproLogoDark}
@@ -120,12 +120,12 @@ export const Sidebar = ({
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto py-6 px-4 dark:bg-background space-y-8">
+        <div className="flex-1 overflow-y-auto py-6 px-4 dark:bg-background space-y-8 min-h-0">
           <SidebarNavSection title="Main" items={mainNavItems} />
           <SidebarNavSection title="Other" items={otherNavItems} />
         </div>
 
-        <div className="p-4 border-t border-border">
+        <div className="p-4 border-t border-border shrink-0">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
