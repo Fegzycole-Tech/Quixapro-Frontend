@@ -120,7 +120,7 @@ export const Sidebar = ({
               alt="Quixapro Logo"
               className="w-8 h-8"
             />
-            <h2 className="text-xl text-primary font-recoleta font-extrabold dark:text-white">
+            <h2 className="text-2xl text-primary font-recoleta font-extrabold dark:text-white">
               Quixapro
             </h2>
           </div>
