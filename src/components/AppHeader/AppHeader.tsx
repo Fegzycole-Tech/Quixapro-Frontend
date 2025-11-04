@@ -7,16 +7,14 @@ interface AppHeaderProps {
 
 export const AppHeader = ({
   pageTitle = 'Dashboard',
-  className = ''
+  className = '',
 }: AppHeaderProps) => {
   return (
-    <header
-      className={`bg-card border-b border-border ${className}`}
-    >
-      <div className="flex w-full justify-between items-center py-4 px-8">
-        <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+    <header className={`bg-card dark:bg-background border-b border-border ${className}`}>
+      <div className="flex w-full justify-between items-center py-4 px-10">
+        <span className="text-sm bg-background dark:bg-card px-4 py-2 rounded-lg font-medium text-gray-900 dark:text-white">
           {pageTitle}
-        </h1>
+        </span>
 
         <ThemeToggle />
       </div>

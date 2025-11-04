@@ -29,10 +29,6 @@ export const AuthenticatedLayout = () => {
     }
   };
 
-  const handleNavigate = (path: string) => {
-    navigate(path);
-  };
-
   if (isLoading) {
     return (
       <div className="h-screen flex items-center justify-center bg-background">
@@ -64,8 +60,6 @@ export const AuthenticatedLayout = () => {
         userName={user.name}
         userEmail={user.email}
         userAvatar={user.photo_url || undefined}
-        currentPath={location.pathname}
-        onNavigate={handleNavigate}
         onLogout={handleLogout}
       />
 
