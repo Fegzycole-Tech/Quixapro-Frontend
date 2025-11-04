@@ -49,6 +49,22 @@ export const routes: RouteObject[] = [
             path: '/dashboard',
             element: <Dashboard />,
           },
+          {
+            path: '/invoicing',
+            element: <></>,
+          },
+          {
+            path: '/business',
+            element: <></>,
+          },
+          {
+            path: '/customers',
+            element: <></>,
+          },
+          {
+            path: '/settings',
+            element: <></>,
+          },
         ],
       },
     ],

@@ -4,7 +4,6 @@ import {
   Building2,
   Users,
   Settings,
-  HeadphonesIcon,
   LogOut,
   ChevronRight,
   X,
@@ -78,11 +77,6 @@ export const Sidebar = ({
       icon: <Settings className="w-5 h-5" />,
       path: '/settings',
     },
-    {
-      label: 'Support',
-      icon: <HeadphonesIcon className="w-5 h-5" />,
-      path: '/support',
-    },
   ];
 
   return (
@@ -126,60 +120,60 @@ export const Sidebar = ({
           </div>
         </div>
 
-      <div className="flex-1 overflow-y-auto py-6 px-4 dark:bg-background space-y-8">
-        <SidebarNavSection title="Main" items={mainNavItems} />
-        <SidebarNavSection title="Other" items={otherNavItems} />
-      </div>
+        <div className="flex-1 overflow-y-auto py-6 px-4 dark:bg-background space-y-8">
+          <SidebarNavSection title="Main" items={mainNavItems} />
+          <SidebarNavSection title="Other" items={otherNavItems} />
+        </div>
 
-      <div className="p-4 border-t border-border">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-              {userAvatar ? (
-                <img
-                  src={userAvatar}
-                  alt={userName}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-              ) : (
-                <div className="w-10 h-10 rounded-full overflow-hidden">
-                  <Avatar
-                    size={40}
-                    name={userName}
-                    variant="beam"
-                    colors={[
-                      '#123283',
-                      '#4F46E5',
-                      '#7C3AED',
-                      '#EC4899',
-                      '#F59E0B',
-                    ]}
+        <div className="p-4 border-t border-border">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                {userAvatar ? (
+                  <img
+                    src={userAvatar}
+                    alt={userName}
+                    className="w-10 h-10 rounded-full object-cover"
                   />
+                ) : (
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <Avatar
+                      size={40}
+                      name={userName}
+                      variant="beam"
+                      colors={[
+                        '#123283',
+                        '#4F46E5',
+                        '#7C3AED',
+                        '#EC4899',
+                        '#F59E0B',
+                      ]}
+                    />
+                  </div>
+                )}
+                <div className="flex-1 min-w-0 text-left">
+                  <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                    {userName}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                    {userEmail}
+                  </p>
                 </div>
-              )}
-              <div className="flex-1 min-w-0 text-left">
-                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                  {userName}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                  {userEmail}
-                </p>
-              </div>
-              <ChevronRight className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem
-              onClick={onLogout}
-              className="text-red-600 dark:text-red-400 cursor-pointer"
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              Log out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </aside>
+                <ChevronRight className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem
+                onClick={onLogout}
+                className="text-red-600 dark:text-red-400 cursor-pointer"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Log out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </aside>
     </>
   );
 };
