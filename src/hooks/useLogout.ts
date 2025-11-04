@@ -10,12 +10,10 @@ export const useLogout = () => {
       return logout(data);
     },
     onSettled: () => {
-      // Clear tokens regardless of API call success or failure
       localStorage.removeItem('auth_token');
       localStorage.removeItem('refresh_token');
       sessionStorage.removeItem('auth_token');
 
-      // Navigate to login
       navigate('/login');
     },
   });
