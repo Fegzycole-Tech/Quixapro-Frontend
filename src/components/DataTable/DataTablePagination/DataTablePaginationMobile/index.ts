@@ -1,0 +1,1 @@
+export { DataTablePaginationMobile } from './DataTablePaginationMobile';
