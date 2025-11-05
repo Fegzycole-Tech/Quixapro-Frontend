@@ -51,7 +51,6 @@ export function DataTablePagination({
       </div>
 
       <div className="flex items-center gap-2">
-        {/* First page button */}
         <button
           onClick={() => onPageChange(1)}
           disabled={currentPage === 1 || loading}
@@ -61,7 +60,6 @@ export function DataTablePagination({
           <ChevronLeft className="w-4 h-4" />
         </button>
 
-        {/* Page 1 if not visible */}
         {startPage > 1 && (
           <>
             <button
@@ -75,7 +73,6 @@ export function DataTablePagination({
           </>
         )}
 
-        {/* Visible page numbers */}
         {pages.map((page) => (
           <button
             key={page}
@@ -93,7 +90,6 @@ export function DataTablePagination({
           </button>
         ))}
 
-        {/* Last page if not visible */}
         {endPage < totalPages && (
           <>
             {endPage < totalPages - 1 && <span className="text-gray-500">...</span>}
@@ -107,7 +103,6 @@ export function DataTablePagination({
           </>
         )}
 
-        {/* Last page button */}
         <button
           onClick={() => onPageChange(totalPages)}
           disabled={currentPage === totalPages || loading}
@@ -117,7 +112,6 @@ export function DataTablePagination({
           <ChevronRight className="w-4 h-4" />
         </button>
 
-        {/* Page size selector */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button

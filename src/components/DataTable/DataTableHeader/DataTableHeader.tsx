@@ -9,13 +9,11 @@ interface DataTableHeaderProps<T> {
   searchPlaceholder: string;
   loading: boolean;
 
-  // Sort
   columns: Column<T>[];
   sortKey: string | null;
   sortDirection: 'asc' | 'desc';
   onSort: (key: string) => void;
 
-  // Filters
   filterOptions: FilterGroup[];
   activeFilters: Record<string, string>;
   onFilterChange: (key: string, value: string) => void;
@@ -36,7 +34,6 @@ export function DataTableHeader<T>({
 }: DataTableHeaderProps<T>) {
   return (
     <div className="p-4 space-y-3 md:space-y-0 md:flex md:items-center md:justify-between border-b border-border">
-      {/* Search */}
       <div className="relative flex-1 max-w-sm">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
         <input
@@ -50,7 +47,6 @@ export function DataTableHeader<T>({
       </div>
 
       <div className="flex items-center gap-2">
-        {/* Filters */}
         <DataTableFilters
           filterOptions={filterOptions}
           activeFilters={activeFilters}
@@ -58,7 +54,6 @@ export function DataTableHeader<T>({
           loading={loading}
         />
 
-        {/* Sort Menu */}
         <DataTableSortMenu
           columns={columns}
           sortKey={sortKey}
