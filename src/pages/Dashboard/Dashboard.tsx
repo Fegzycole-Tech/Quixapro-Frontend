@@ -21,7 +21,6 @@ interface Customer {
   [key: string]: string | undefined;
 }
 
-// Sample data matching the screenshots
 const sampleCustomers: Customer[] = [
   {
     id: '1',
@@ -137,38 +136,24 @@ const getAvatarColor = (name: string) => {
 };
 
 export const Dashboard = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
-  // In a real app, these would come from your API response
-  const totalCount = 25; // Total number of records in the database
+  const totalCount = 25;
 
-  // Simulate API calls - wrapped in useCallback to prevent re-renders
   const handleSearch = useCallback((query: string) => {
     console.log('Search API call with query:', query);
-    // In real app: make API call with search query
-    // setLoading(true);
-    // api.getCustomers({ search: query }).then(...)
   }, []);
 
   const handleSort = useCallback((params: SortParams) => {
     console.log('Sort API call with params:', params);
-    // In real app: make API call with sort parameters
-    // setLoading(true);
-    // api.getCustomers({ sortBy: params.key, sortDirection: params.direction }).then(...)
   }, []);
 
   const handlePageChange = useCallback((params: PaginationParams) => {
     console.log('Pagination API call with params:', params);
-    // In real app: make API call with pagination parameters
-    // setLoading(true);
-    // api.getCustomers({ page: params.page, limit: params.limit, offset: params.offset }).then(...)
   }, []);
 
   const handleFilterChange = useCallback((filters: Record<string, string>) => {
     console.log('Filter API call with filters:', filters);
-    // In real app: make API call with filter parameters
-    // setLoading(true);
-    // api.getCustomers({ filters }).then(...)
   }, []);
 
   const columns: Column<Customer>[] = [
@@ -250,7 +235,7 @@ export const Dashboard = () => {
       header: 'Business Name/Email',
       render: (customer) => (
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded flex items-center justify-center">
+          <div className="w-8 h-8 bg-linear-to-br from-yellow-400 to-orange-500 rounded flex items-center justify-center">
             <span className="text-white text-xs font-bold">📊</span>
           </div>
           <div>
@@ -323,8 +308,8 @@ export const Dashboard = () => {
       <DataTable
         data={sampleCustomers}
         columns={columns}
-        mode="server" // Use server-side mode for API-driven operations
-        syncWithUrl={true} // Enable URL synchronization
+        mode="server"
+        syncWithUrl={true}
         totalCount={totalCount}
         loading={loading}
         onSearch={handleSearch}
