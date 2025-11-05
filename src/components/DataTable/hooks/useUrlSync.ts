@@ -112,7 +112,7 @@ export function useUrlSync({
 
     // Update local state
     if (urlSearch !== searchQuery) setSearchQuery(urlSearch);
-    if (urlSortBy && urlSortBy !== sortKey) {
+    if (urlSortBy && (urlSortBy !== sortKey || urlSortDirection !== sortDirection)) {
       setSortKey(urlSortBy);
       setSortDirection(urlSortDirection);
     }
@@ -124,7 +124,7 @@ export function useUrlSync({
 
     // Trigger API callbacks
     if (urlSearch !== searchQuery && onSearch) onSearch(urlSearch);
-    if (urlSortBy && urlSortBy !== sortKey && onSort) {
+    if (urlSortBy && (urlSortBy !== sortKey || urlSortDirection !== sortDirection) && onSort) {
       onSort({ key: urlSortBy, direction: urlSortDirection });
     }
     if (urlPage !== currentPage && onPageChange) {
@@ -139,6 +139,7 @@ export function useUrlSync({
     filterOptions,
     searchQuery,
     sortKey,
+    sortDirection,
     currentPage,
     activeFilters,
     pageSize,
