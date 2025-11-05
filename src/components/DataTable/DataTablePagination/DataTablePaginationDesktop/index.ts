@@ -1,0 +1,1 @@
+export { DataTablePaginationDesktop } from './DataTablePaginationDesktop';
