@@ -8,6 +8,8 @@ import { ForgotPassword } from '@/pages/ForgotPassword/ForgotPassword';
 import { Verify } from '@/pages/Verify';
 import { ResetPassword } from '@/pages/ResetPassword';
 import { Dashboard } from '@/pages/Dashboard';
+import { CustomersPage } from '@/pages/Customers';
+import { CreateCustomerPage } from '@/pages/CreateCustomer';
 
 export const routes: RouteObject[] = [
   {
@@ -59,7 +61,11 @@ export const routes: RouteObject[] = [
           },
           {
             path: '/customers',
-            element: <></>,
+            element: <CustomersPage />,
+          },
+          {
+            path: '/customers/create',
+            element: <CreateCustomerPage />,
           },
           {
             path: '/settings',

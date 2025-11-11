@@ -1,4 +1,5 @@
 export { DataTable } from './DataTable';
+export { DataTableSkeleton } from './DataTableSkeleton';
 export type {
   Column,
   DataTableProps,
