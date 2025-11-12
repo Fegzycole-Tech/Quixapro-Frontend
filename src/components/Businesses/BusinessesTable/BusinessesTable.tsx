@@ -145,7 +145,7 @@ export const BusinessesTable = ({
 
   return (
     <>
-      <div className="p-4 md:p-8">
+      <div className="px-4">
         <DataTable
           data={data?.results || []}
           columns={columns}
