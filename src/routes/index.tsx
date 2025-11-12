@@ -12,8 +12,8 @@ import { CustomersPage } from '@/pages/Customers';
 import { CreateCustomerPage } from '@/pages/CreateCustomer';
 import { ViewCustomerPage } from '@/pages/ViewCustomer';
 import { BusinessesPage } from '@/pages/Businesses';
-import { CreateBusinessPage } from '@/pages/Businesses/CreateBusinessPage';
-import { ViewBusinessPage } from '@/pages/Businesses/ViewBusinessPage';
+import { CreateBusinessPage } from '@/pages/CreateBusiness';
+import { ViewBusinessPage } from '@/pages/ViewBusiness';
 
 export const routes: RouteObject[] = [
   {
