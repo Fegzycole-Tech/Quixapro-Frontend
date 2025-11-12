@@ -1,4 +1,4 @@
-import { Download, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface CustomersHeaderProps {
@@ -6,10 +6,7 @@ interface CustomersHeaderProps {
   onCreateCustomer: () => void;
 }
 
-export const CustomersHeader = ({
-  onExport,
-  onCreateCustomer,
-}: CustomersHeaderProps) => {
+export const CustomersHeader = ({ onCreateCustomer }: CustomersHeaderProps) => {
   return (
     <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-card p-4">
       <div>
@@ -21,10 +18,6 @@ export const CustomersHeader = ({
         </p>
       </div>
       <div className="flex items-center gap-3">
-        <Button onClick={onExport} variant="outline">
-          <Download />
-          Export
-        </Button>
         <Button onClick={onCreateCustomer}>
           <Plus />
           Create New Customer

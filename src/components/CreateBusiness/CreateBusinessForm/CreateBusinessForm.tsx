@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import type { CreateBusinessInput } from '@/lib/validations/business';
-import { CompanyLogoUpload } from '../CompanyLogoUpload';
+import { CompanyLogoUpload } from '@/components/CompanyLogo';
 
 interface CreateBusinessFormProps {
   form: UseFormReturn<CreateBusinessInput>;

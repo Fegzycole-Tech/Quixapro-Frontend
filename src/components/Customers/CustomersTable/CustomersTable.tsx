@@ -7,30 +7,11 @@ import {
   type SortParams,
   type PaginationParams,
 } from '@/components/DataTable';
-import { DeleteCustomerDialog } from '@/components/DeleteCustomerDialog';
+import { EntityDeleteDialog } from '@/components/EntityDeleteDialog';
+import { useDeleteCustomer } from '@/hooks';
 import { cn } from '@/lib/utils';
+import { getInitials, getAvatarColor } from '@/lib/utils/avatar';
 import type { Customer, CustomerListResponse } from '@/lib/api/customers';
-
-const getInitials = (name: string) => {
-  return name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .toUpperCase();
-};
-
-const getAvatarColor = (name: string) => {
-  const colors = [
-    'bg-blue-500',
-    'bg-purple-500',
-    'bg-pink-500',
-    'bg-green-500',
-    'bg-yellow-500',
-    'bg-red-500',
-  ];
-  const index = name.charCodeAt(0) % colors.length;
-  return colors[index];
-};
 
 interface CustomersTableProps {
   data?: CustomerListResponse;
@@ -50,7 +31,10 @@ export const CustomersTable = ({
   onFilterChange,
 }: CustomersTableProps) => {
   const navigate = useNavigate();
-  const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(null);
+  const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(
+    null
+  );
+  const { mutate: deleteCustomer, isPending: isDeleting } = useDeleteCustomer();
 
   const columns: Column<Customer>[] = useMemo(
     () => [
@@ -138,9 +122,12 @@ export const CustomersTable = ({
     []
   );
 
-  const handleView = useCallback((customer: Customer) => {
-    navigate(`/customers/${customer.id}`);
-  }, [navigate]);
+  const handleView = useCallback(
+    (customer: Customer) => {
+      navigate(`/customers/${customer.id}`);
+    },
+    [navigate]
+  );
 
   const handleDelete = useCallback((customer: Customer) => {
     setCustomerToDelete(customer);
@@ -178,9 +165,12 @@ export const CustomersTable = ({
         />
       </div>
 
-      <DeleteCustomerDialog
-        customer={customerToDelete}
+      <EntityDeleteDialog
+        entity={customerToDelete}
+        entityName="customer"
         onClose={() => setCustomerToDelete(null)}
+        onDelete={deleteCustomer}
+        isPending={isDeleting}
       />
     </>
   );

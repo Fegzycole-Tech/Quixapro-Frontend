@@ -1,0 +1,1 @@
+export { EntityDeleteDialog } from './EntityDeleteDialog';

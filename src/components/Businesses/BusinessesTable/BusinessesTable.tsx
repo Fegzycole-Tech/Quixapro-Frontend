@@ -7,30 +7,11 @@ import {
   type SortParams,
   type PaginationParams,
 } from '@/components/DataTable';
-import { DeleteBusinessDialog } from '@/components/DeleteBusinessDialog';
+import { EntityDeleteDialog } from '@/components/EntityDeleteDialog';
+import { useDeleteBusiness } from '@/hooks';
 import { cn } from '@/lib/utils';
+import { getInitials, getAvatarColor } from '@/lib/utils/avatar';
 import type { Business, BusinessListResponse } from '@/lib/api/businesses';
-
-const getInitials = (name: string) => {
-  return name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
-    .toUpperCase();
-};
-
-const getAvatarColor = (name: string) => {
-  const colors = [
-    'bg-blue-500',
-    'bg-purple-500',
-    'bg-pink-500',
-    'bg-green-500',
-    'bg-yellow-500',
-    'bg-red-500',
-  ];
-  const index = name.charCodeAt(0) % colors.length;
-  return colors[index];
-};
 
 interface BusinessesTableProps {
   data?: BusinessListResponse;
@@ -50,7 +31,10 @@ export const BusinessesTable = ({
   onFilterChange,
 }: BusinessesTableProps) => {
   const navigate = useNavigate();
-  const [businessToDelete, setBusinessToDelete] = useState<Business | null>(null);
+  const [businessToDelete, setBusinessToDelete] = useState<Business | null>(
+    null
+  );
+  const { mutate: deleteBusiness, isPending: isDeleting } = useDeleteBusiness();
 
   const columns: Column<Business>[] = useMemo(
     () => [
@@ -148,9 +132,12 @@ export const BusinessesTable = ({
     []
   );
 
-  const handleView = useCallback((business: Business) => {
-    navigate(`/businesses/${business.id}`);
-  }, [navigate]);
+  const handleView = useCallback(
+    (business: Business) => {
+      navigate(`/businesses/${business.id}`);
+    },
+    [navigate]
+  );
 
   const handleDelete = useCallback((business: Business) => {
     setBusinessToDelete(business);
@@ -188,9 +175,12 @@ export const BusinessesTable = ({
         />
       </div>
 
-      <DeleteBusinessDialog
-        business={businessToDelete}
+      <EntityDeleteDialog
+        entity={businessToDelete}
+        entityName="business"
         onClose={() => setBusinessToDelete(null)}
+        onDelete={deleteBusiness}
+        isPending={isDeleting}
       />
     </>
   );

@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import type { Customer } from '@/lib/api/customers';
 import type { CreateCustomerInput } from '@/lib/validations/customer';
-import { CompanyLogoDisplay } from '../CompanyLogoDisplay';
+import { CompanyLogoDisplay } from '@/components/CompanyLogo';
 
 interface ViewCustomerDetailsProps {
   customer: Customer;
@@ -68,11 +68,7 @@ export const ViewCustomerDetails = ({
                 </label>
                 <div className="relative">
                   <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    {...field}
-                    className="pl-10"
-                    disabled={isUpdating}
-                  />
+                  <Input {...field} className="pl-10" disabled={isUpdating} />
                 </div>
                 <FormMessage className="text-destructive text-xs opacity-80" />
               </FormItem>
@@ -89,11 +85,7 @@ export const ViewCustomerDetails = ({
                 </label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    {...field}
-                    className="pl-10"
-                    disabled={isUpdating}
-                  />
+                  <Input {...field} className="pl-10" disabled={isUpdating} />
                 </div>
                 <FormMessage className="text-destructive text-xs opacity-80" />
               </FormItem>
@@ -110,11 +102,7 @@ export const ViewCustomerDetails = ({
                 </label>
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                  <Input
-                    {...field}
-                    className="pl-10"
-                    disabled={isUpdating}
-                  />
+                  <Input {...field} className="pl-10" disabled={isUpdating} />
                 </div>
                 <FormMessage className="text-destructive text-xs opacity-80" />
               </FormItem>
