@@ -1,43 +1,31 @@
-import { type RefObject, type ChangeEvent } from 'react';
-import { Loader2, Building2 } from 'lucide-react';
+import { Building2, Loader2 } from 'lucide-react';
+import { type ChangeEvent, type RefObject } from 'react';
 import { Button } from '@/components/ui/button';
 
-interface CompanyLogoUploadProps {
-  logoPreview: string | null;
+interface CompanyLogoDisplayProps {
+  photoUrl: string | null;
+  isEditMode: boolean;
   uploading: boolean;
+  logoPreview: string | null;
   fileInputRef: RefObject<HTMLInputElement | null>;
   onFileSelect: (event: ChangeEvent<HTMLInputElement>) => void;
-  onRemove?: () => void;
+  onRemoveLogo: () => void;
 }
 
-const getOptimizedImageUrl = (url: string | null): string | null => {
-  if (!url) return null;
-
-  if (url.includes('cloudinary.com')) {
-    return url.replace('/upload/', '/upload/w_200,h_200,c_fill,g_auto,q_auto,f_auto/');
-  }
-
-  return url;
-};
-
-export const CompanyLogoUpload = ({
-  logoPreview,
+export const CompanyLogoDisplay = ({
+  photoUrl,
+  isEditMode,
   uploading,
+  logoPreview,
   fileInputRef,
   onFileSelect,
-  onRemove,
-}: CompanyLogoUploadProps) => {
+  onRemoveLogo,
+}: CompanyLogoDisplayProps) => {
   const handleClick = () => {
-    if (!uploading) {
-      fileInputRef.current?.click();
-    }
+    fileInputRef.current?.click();
   };
 
-  const handleRemove = () => {
-    if (onRemove) {
-      onRemove();
-    }
-  };
+  const displayUrl = logoPreview || photoUrl;
 
   return (
     <div className="mb-6">
@@ -45,41 +33,32 @@ export const CompanyLogoUpload = ({
         Upload Company Logo
       </label>
       <div className="flex items-start gap-4">
-        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden shrink-0 relative">
+        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden shrink-0">
           {uploading ? (
-            <div className="absolute inset-0 flex items-center justify-center bg-primary/10">
-              <Loader2 className="w-6 h-6 text-primary animate-spin" />
-            </div>
-          ) : logoPreview ? (
+            <Loader2 className="w-6 h-6 text-primary animate-spin" />
+          ) : displayUrl ? (
             <img
-              src={getOptimizedImageUrl(logoPreview) || logoPreview}
-              alt="Company logo preview"
+              src={displayUrl}
+              alt="Company logo"
               className="w-full h-full object-cover object-center"
             />
           ) : (
             <Building2 className="w-8 h-8 text-primary" />
           )}
         </div>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={onFileSelect}
-          className="hidden"
-        />
         <div className="flex-1">
           <p className="text-xs text-muted-foreground mb-2">
             Max 400x400px, PNG or JPEG
           </p>
           <div className="flex gap-2">
-            {logoPreview ? (
+            {displayUrl ? (
               <>
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
-                  onClick={handleRemove}
-                  disabled={uploading}
+                  onClick={onRemoveLogo}
+                  disabled={!isEditMode || uploading}
                 >
                   Remove
                 </Button>
@@ -88,7 +67,7 @@ export const CompanyLogoUpload = ({
                   variant="outline"
                   size="sm"
                   onClick={handleClick}
-                  disabled={uploading}
+                  disabled={!isEditMode || uploading}
                 >
                   Change Photo
                 </Button>
@@ -99,7 +78,7 @@ export const CompanyLogoUpload = ({
                 variant="outline"
                 size="sm"
                 onClick={handleClick}
-                disabled={uploading}
+                disabled={!isEditMode || uploading}
               >
                 Upload
               </Button>
@@ -107,6 +86,13 @@ export const CompanyLogoUpload = ({
           </div>
         </div>
       </div>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={onFileSelect}
+        className="hidden"
+      />
     </div>
   );
 };

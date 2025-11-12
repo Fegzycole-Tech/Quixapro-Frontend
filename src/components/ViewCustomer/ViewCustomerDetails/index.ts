@@ -1,0 +1,1 @@
+export { ViewCustomerDetails } from './ViewCustomerDetails';

@@ -1,0 +1,1 @@
+export { ViewCustomerSkeleton } from './ViewCustomerSkeleton';

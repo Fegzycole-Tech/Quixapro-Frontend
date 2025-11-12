@@ -52,7 +52,7 @@ export function DataTableMobile<T extends Record<string, string | number | boole
                 <DropdownMenuTrigger asChild>
                   <button
                     onClick={(e) => e.stopPropagation()}
-                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+                    className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
                   >
                     <MoreVertical className="w-5 h-5" />
                   </button>

@@ -74,7 +74,7 @@ export function DataTableDesktop<T extends Record<string, string | number | bool
                           e.stopPropagation();
                           action.onClick(row);
                         }}
-                        className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                        className="p-1.5 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
                         aria-label={action.label}
                       >
                         {action.icon}

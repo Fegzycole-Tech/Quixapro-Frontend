@@ -1,5 +1,9 @@
 export { useRequireValidEmail } from './useRequireValidEmail';
 export { useCustomers } from './useCustomers';
+export { useCustomer } from './useCustomer';
 export { useCustomersPage } from './useCustomersPage';
 export { useCreateCustomer } from './useCreateCustomer';
 export { useCreateCustomerPage } from './useCreateCustomerPage';
+export { useDeleteCustomer } from './useDeleteCustomer';
+export { useUpdateCustomer } from './useUpdateCustomer';
+export { useViewCustomerPage } from './useViewCustomerPage';

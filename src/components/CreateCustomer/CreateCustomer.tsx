@@ -12,6 +12,7 @@ export const CreateCustomer = () => {
     handleFileSelect,
     handleSubmit,
     handleBack,
+    handleRemoveLogo,
   } = useCreateCustomerPage();
 
   return (
@@ -25,6 +26,7 @@ export const CreateCustomer = () => {
           isPending={isPending}
           fileInputRef={fileInputRef}
           onFileSelect={handleFileSelect}
+          onRemoveLogo={handleRemoveLogo}
           onSubmit={handleSubmit}
           onBack={handleBack}
         />

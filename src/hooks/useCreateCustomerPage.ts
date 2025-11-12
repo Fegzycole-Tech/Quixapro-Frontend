@@ -84,6 +84,14 @@ export const useCreateCustomerPage = () => {
     navigate('/customers');
   }, [navigate]);
 
+  const handleRemoveLogo = useCallback(() => {
+    setLogoPreview(null);
+    form.setValue('photo_url', '');
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }, [form]);
+
   return {
     form,
     uploading,
@@ -93,5 +101,6 @@ export const useCreateCustomerPage = () => {
     handleFileSelect,
     handleSubmit,
     handleBack,
+    handleRemoveLogo,
   };
 };

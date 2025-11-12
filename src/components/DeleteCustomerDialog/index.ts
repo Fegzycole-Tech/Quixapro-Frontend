@@ -1,0 +1,1 @@
+export { DeleteCustomerDialog } from './DeleteCustomerDialog';

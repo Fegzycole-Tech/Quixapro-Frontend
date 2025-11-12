@@ -1,5 +1,6 @@
 import { type UseFormReturn } from 'react-hook-form';
 import { type RefObject, type ChangeEvent } from 'react';
+import { Building2, Mail, MapPin } from 'lucide-react';
 import {
   Form,
   FormControl,
@@ -20,6 +21,7 @@ interface CreateCustomerFormProps {
   isPending: boolean;
   fileInputRef: RefObject<HTMLInputElement | null>;
   onFileSelect: (event: ChangeEvent<HTMLInputElement>) => void;
+  onRemoveLogo: () => void;
   onSubmit: (data: CreateCustomerInput) => void;
   onBack: () => void;
 }
@@ -31,6 +33,7 @@ export const CreateCustomerForm = ({
   isPending,
   fileInputRef,
   onFileSelect,
+  onRemoveLogo,
   onSubmit,
   onBack,
 }: CreateCustomerFormProps) => {
@@ -52,6 +55,7 @@ export const CreateCustomerForm = ({
             uploading={uploading}
             fileInputRef={fileInputRef}
             onFileSelect={onFileSelect}
+            onRemove={onRemoveLogo}
           />
 
           <FormField
@@ -63,7 +67,11 @@ export const CreateCustomerForm = ({
                   Company Name <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Company Name" {...field} />
+                  <Input
+                    placeholder="Enter Company Name"
+                    leftIcon={<Building2 className="w-4 h-4" />}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage className="text-destructive text-xs opacity-80" />
               </FormItem>
@@ -82,6 +90,7 @@ export const CreateCustomerForm = ({
                   <Input
                     type="email"
                     placeholder="hello@zolvex.com"
+                    leftIcon={<Mail className="w-4 h-4" />}
                     {...field}
                   />
                 </FormControl>
@@ -99,7 +108,11 @@ export const CreateCustomerForm = ({
                   Company Address <span className="text-destructive">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Company Address" {...field} />
+                  <Input
+                    placeholder="Enter Company Address"
+                    leftIcon={<MapPin className="w-4 h-4" />}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage className="text-destructive text-xs opacity-80" />
               </FormItem>

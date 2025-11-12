@@ -1,11 +1,13 @@
-import { useMemo, useCallback } from 'react';
-import { Lock, Pencil } from 'lucide-react';
+import { useMemo, useCallback, useState } from 'react';
+import { Eye, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router';
 import {
   DataTable,
   type Column,
   type SortParams,
   type PaginationParams,
 } from '@/components/DataTable';
+import { DeleteCustomerDialog } from '@/components/DeleteCustomerDialog';
 import { cn } from '@/lib/utils';
 import type { Customer, CustomerListResponse } from '@/lib/api/customers';
 
@@ -47,6 +49,9 @@ export const CustomersTable = ({
   onPageChange,
   onFilterChange,
 }: CustomersTableProps) => {
+  const navigate = useNavigate();
+  const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(null);
+
   const columns: Column<Customer>[] = useMemo(
     () => [
       {
@@ -134,42 +139,49 @@ export const CustomersTable = ({
   );
 
   const handleView = useCallback((customer: Customer) => {
-    console.log('View customer:', customer);
-  }, []);
+    navigate(`/customers/${customer.id}`);
+  }, [navigate]);
 
-  const handleEdit = useCallback((customer: Customer) => {
-    console.log('Edit customer:', customer);
+  const handleDelete = useCallback((customer: Customer) => {
+    setCustomerToDelete(customer);
   }, []);
 
   return (
-    <div className="p-4 md:p-8">
-      <DataTable
-        data={data?.results || []}
-        columns={columns}
-        mode="server"
-        syncWithUrl={true}
-        totalCount={data?.count || 0}
-        loading={isLoading}
-        onSearch={onSearch}
-        onSort={onSort}
-        onPageChange={onPageChange}
-        onFilterChange={onFilterChange}
-        searchKeys={['name', 'email', 'address']}
-        searchPlaceholder="Search customers..."
-        filterOptions={[]}
-        actions={[
-          {
-            label: 'View',
-            icon: <Lock className="w-4 h-4" />,
-            onClick: handleView,
-          },
-          {
-            label: 'Edit',
-            icon: <Pencil className="w-4 h-4" />,
-            onClick: handleEdit,
-          },
-        ]}
+    <>
+      <div className="p-4 md:p-8">
+        <DataTable
+          data={data?.results || []}
+          columns={columns}
+          mode="server"
+          syncWithUrl={true}
+          totalCount={data?.count || 0}
+          loading={isLoading}
+          onSearch={onSearch}
+          onSort={onSort}
+          onPageChange={onPageChange}
+          onFilterChange={onFilterChange}
+          searchKeys={['name', 'email', 'address']}
+          searchPlaceholder="Search customers..."
+          filterOptions={[]}
+          actions={[
+            {
+              label: 'View',
+              icon: <Eye className="w-4 h-4" />,
+              onClick: handleView,
+            },
+            {
+              label: 'Delete',
+              icon: <Trash2 className="w-4 h-4" />,
+              onClick: handleDelete,
+            },
+          ]}
+        />
+      </div>
+
+      <DeleteCustomerDialog
+        customer={customerToDelete}
+        onClose={() => setCustomerToDelete(null)}
       />
-    </div>
+    </>
   );
 };

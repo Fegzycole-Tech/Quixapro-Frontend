@@ -61,3 +61,26 @@ export async function createCustomer(data: CreateCustomerData): Promise<Customer
     body: JSON.stringify(data),
   });
 }
+
+export async function deleteCustomer(id: number): Promise<void> {
+  await authenticatedApiClient<void>(`/customers/${id}/`, {
+    method: 'DELETE',
+  });
+}
+
+export interface UpdateCustomerData {
+  name?: string;
+  email?: string;
+  address?: string;
+  photo_url?: string;
+}
+
+export async function updateCustomer(
+  id: number,
+  data: UpdateCustomerData
+): Promise<Customer> {
+  return authenticatedApiClient<Customer>(`/customers/${id}/`, {
+    method: 'PATCH',
+    body: JSON.stringify(data),
+  });
+}

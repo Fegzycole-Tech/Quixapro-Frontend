@@ -10,6 +10,7 @@ import { ResetPassword } from '@/pages/ResetPassword';
 import { Dashboard } from '@/pages/Dashboard';
 import { CustomersPage } from '@/pages/Customers';
 import { CreateCustomerPage } from '@/pages/CreateCustomer';
+import { ViewCustomerPage } from '@/pages/ViewCustomer';
 
 export const routes: RouteObject[] = [
   {
@@ -66,6 +67,10 @@ export const routes: RouteObject[] = [
           {
             path: '/customers/create',
             element: <CreateCustomerPage />,
+          },
+          {
+            path: '/customers/:id',
+            element: <ViewCustomerPage />,
           },
           {
             path: '/settings',
