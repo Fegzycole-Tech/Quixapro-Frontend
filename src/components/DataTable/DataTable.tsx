@@ -3,6 +3,7 @@ import { DataTableHeader } from './DataTableHeader';
 import { DataTableDesktop } from './DataTableDesktop';
 import { DataTableMobile } from './DataTableMobile';
 import { DataTablePagination } from './DataTablePagination';
+import { DataTableSkeleton } from './DataTableSkeleton';
 import { useTableState } from './hooks/useTableState';
 import { useUrlSync } from './hooks/useUrlSync';
 import { useTableData } from './hooks/useTableData';
@@ -97,11 +98,7 @@ export function DataTable<
       />
 
       {loading && (
-        <div className="p-8 flex items-center justify-center">
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            Loading...
-          </div>
-        </div>
+        <DataTableSkeleton rows={tableState.pageSize} columns={columns.length} />
       )}
 
       {!loading && (

@@ -34,15 +34,7 @@ export const AuthenticatedLayout = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="h-screen flex items-center justify-center bg-background">
-        <div className="text-foreground">Loading...</div>
-      </div>
-    );
-  }
-
-  if (!data) {
+  if (isLoading || !data) {
     return null;
   }
 

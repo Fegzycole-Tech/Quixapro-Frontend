@@ -23,7 +23,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             data-slot="input"
             className={cn(
               "w-full min-w-0 rounded-md border outline-none transition-[color,box-shadow,border-color]",
-              "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 pt-1",
+              "h-10 py-2 text-sm",
+              "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
               leftIcon && "pl-9",
               rightIcon && "pr-9",
               !leftIcon && !rightIcon && "px-3",
@@ -46,7 +47,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         data-slot="input"
         className={cn(
-          "w-full min-w-0 rounded-md border px-3 outline-none transition-[color,box-shadow,border-color]",
+          "w-full min-w-0 rounded-md border px-3 py-2 outline-none transition-[color,box-shadow,border-color]",
+          "h-10 text-sm",
           "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}

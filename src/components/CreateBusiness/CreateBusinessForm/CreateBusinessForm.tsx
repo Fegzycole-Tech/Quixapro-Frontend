@@ -1,0 +1,165 @@
+import { type UseFormReturn } from 'react-hook-form';
+import { type RefObject, type ChangeEvent } from 'react';
+import { Building2, Mail, MapPin, Phone } from 'lucide-react';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import type { CreateBusinessInput } from '@/lib/validations/business';
+import { CompanyLogoUpload } from '@/components/CompanyLogo';
+
+interface CreateBusinessFormProps {
+  form: UseFormReturn<CreateBusinessInput>;
+  logoPreview: string | null;
+  uploading: boolean;
+  isPending: boolean;
+  fileInputRef: RefObject<HTMLInputElement | null>;
+  onFileSelect: (event: ChangeEvent<HTMLInputElement>) => void;
+  onRemoveLogo: () => void;
+  onSubmit: (data: CreateBusinessInput) => void;
+  onBack: () => void;
+}
+
+export const CreateBusinessForm = ({
+  form,
+  logoPreview,
+  uploading,
+  isPending,
+  fileInputRef,
+  onFileSelect,
+  onRemoveLogo,
+  onSubmit,
+  onBack,
+}: CreateBusinessFormProps) => {
+  return (
+    <div className="bg-card border border-border rounded-lg p-6 md:p-8">
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-foreground mb-1">
+          Company details
+        </h2>
+        <p className="text-sm text-muted-foreground">
+          Fill in business company details to get started
+        </p>
+      </div>
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <CompanyLogoUpload
+            logoPreview={logoPreview}
+            uploading={uploading}
+            fileInputRef={fileInputRef}
+            onFileSelect={onFileSelect}
+            onRemove={onRemoveLogo}
+          />
+
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Company Name <span className="text-destructive">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter Company Name"
+                    leftIcon={<Building2 className="w-4 h-4" />}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-destructive text-xs opacity-80" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Company Email <span className="text-destructive">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="hello@zolvex.com"
+                    leftIcon={<Mail className="w-4 h-4" />}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-destructive text-xs opacity-80" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="phone_number"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Phone Number <span className="text-destructive">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="tel"
+                    placeholder="+1-555-0100"
+                    leftIcon={<Phone className="w-4 h-4" />}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-destructive text-xs opacity-80" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Company Address <span className="text-destructive">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter Company Address"
+                    leftIcon={<MapPin className="w-4 h-4" />}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-destructive text-xs opacity-80" />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex gap-4 pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onBack}
+              className="flex-1"
+            >
+              Back
+            </Button>
+            <Button
+              type="submit"
+              disabled={isPending || uploading}
+              loading={isPending}
+              className="flex-1"
+            >
+              Save Business
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
+  );
+};
