@@ -1,0 +1,1 @@
+export { CompanyLogoDisplay } from './CompanyLogoDisplay';

@@ -8,13 +8,13 @@ import {
   type PaginationParams,
 } from '@/components/DataTable';
 import { EntityDeleteDialog } from '@/components/EntityDeleteDialog';
-import { useDeleteCustomer } from '@/hooks';
+import { useDeleteBusiness } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { getInitials, getAvatarColor } from '@/lib/utils/avatar';
-import type { Customer, CustomerListResponse } from '@/lib/api/customers';
+import type { Business, BusinessListResponse } from '@/lib/api/businesses';
 
-interface CustomersTableProps {
-  data?: CustomerListResponse;
+interface BusinessesTableProps {
+  data?: BusinessListResponse;
   isLoading: boolean;
   onSearch: (query: string) => void;
   onSort: (params: SortParams) => void;
@@ -22,77 +22,77 @@ interface CustomersTableProps {
   onFilterChange: (filters: Record<string, string>) => void;
 }
 
-export const CustomersTable = ({
+export const BusinessesTable = ({
   data,
   isLoading,
   onSearch,
   onSort,
   onPageChange,
   onFilterChange,
-}: CustomersTableProps) => {
+}: BusinessesTableProps) => {
   const navigate = useNavigate();
-  const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(
+  const [businessToDelete, setBusinessToDelete] = useState<Business | null>(
     null
   );
-  const { mutate: deleteCustomer, isPending: isDeleting } = useDeleteCustomer();
+  const { mutate: deleteBusiness, isPending: isDeleting } = useDeleteBusiness();
 
-  const columns: Column<Customer>[] = useMemo(
+  const columns: Column<Business>[] = useMemo(
     () => [
       {
         key: 'name',
-        header: 'Customer Name',
-        render: (customer) => (
+        header: 'Business Name',
+        render: (business) => (
           <div className="flex items-center gap-3">
-            {customer.photo_url ? (
+            {business.photo_url ? (
               <img
-                src={customer.photo_url}
-                alt={customer.name}
+                src={business.photo_url}
+                alt={business.name}
                 className="w-10 h-10 rounded-full object-cover"
               />
             ) : (
               <div
                 className={cn(
                   'w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-medium',
-                  getAvatarColor(customer.name)
+                  getAvatarColor(business.name)
                 )}
               >
-                {getInitials(customer.name)}
+                {getInitials(business.name)}
               </div>
             )}
             <div>
               <div className="font-medium text-gray-900 dark:text-white">
-                {customer.name}
+                {business.name}
               </div>
               <div className="text-xs text-gray-500 dark:text-gray-400">
-                {customer.email}
+                {business.email}
               </div>
             </div>
           </div>
         ),
-        mobileRender: (customer) => (
+        mobileRender: (business) => (
           <div className="flex items-center gap-3">
-            {customer.photo_url ? (
+            {business.photo_url ? (
               <img
-                src={customer.photo_url}
-                alt={customer.name}
+                src={business.photo_url}
+                alt={business.name}
                 className="w-10 h-10 rounded-full object-cover"
               />
             ) : (
               <div
                 className={cn(
                   'w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-medium',
-                  getAvatarColor(customer.name)
+                  getAvatarColor(business.name)
                 )}
               >
-                {getInitials(customer.name)}
+                {getInitials(business.name)}
               </div>
             )}
             <div className="flex-1">
               <div className="font-medium text-gray-900 dark:text-white">
-                {customer.name}
+                {business.name}
               </div>
               <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                {customer.email}
+                {business.email}
               </div>
             </div>
           </div>
@@ -101,9 +101,19 @@ export const CustomersTable = ({
       {
         key: 'address',
         header: 'Address',
-        render: (customer) => (
+        render: (business) => (
           <div className="text-gray-900 dark:text-white">
-            {customer.address}
+            {business.address}
+          </div>
+        ),
+        hideOnMobile: true,
+      },
+      {
+        key: 'phone_number',
+        header: 'Phone',
+        render: (business) => (
+          <div className="text-gray-900 dark:text-white">
+            {business.phone_number}
           </div>
         ),
         hideOnMobile: true,
@@ -111,9 +121,9 @@ export const CustomersTable = ({
       {
         key: 'created_at',
         header: 'Date Added',
-        render: (customer) => (
+        render: (business) => (
           <div className="text-gray-900 dark:text-white">
-            {new Date(customer.created_at).toLocaleDateString()}
+            {new Date(business.created_at).toLocaleDateString()}
           </div>
         ),
         hideOnMobile: true,
@@ -123,14 +133,14 @@ export const CustomersTable = ({
   );
 
   const handleView = useCallback(
-    (customer: Customer) => {
-      navigate(`/customers/${customer.id}`);
+    (business: Business) => {
+      navigate(`/businesses/${business.id}`);
     },
     [navigate]
   );
 
-  const handleDelete = useCallback((customer: Customer) => {
-    setCustomerToDelete(customer);
+  const handleDelete = useCallback((business: Business) => {
+    setBusinessToDelete(business);
   }, []);
 
   return (
@@ -147,8 +157,8 @@ export const CustomersTable = ({
           onSort={onSort}
           onPageChange={onPageChange}
           onFilterChange={onFilterChange}
-          searchKeys={['name', 'email', 'address']}
-          searchPlaceholder="Search customers..."
+          searchKeys={['name', 'email', 'address', 'phone_number']}
+          searchPlaceholder="Search businesses..."
           filterOptions={[]}
           actions={[
             {
@@ -166,10 +176,10 @@ export const CustomersTable = ({
       </div>
 
       <EntityDeleteDialog
-        entity={customerToDelete}
-        entityName="customer"
-        onClose={() => setCustomerToDelete(null)}
-        onDelete={deleteCustomer}
+        entity={businessToDelete}
+        entityName="business"
+        onClose={() => setBusinessToDelete(null)}
+        onDelete={deleteBusiness}
         isPending={isDeleting}
       />
     </>

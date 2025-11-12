@@ -1,29 +1,29 @@
-import { Building2, Mail, MapPin, Loader2 } from 'lucide-react';
+import { Building2, Mail, MapPin, Phone, Loader2 } from 'lucide-react';
 import { type ChangeEvent, type RefObject } from 'react';
 import { type UseFormReturn } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import type { Customer } from '@/lib/api/customers';
-import type { CreateCustomerInput } from '@/lib/validations/customer';
+import type { Business } from '@/lib/api/businesses';
+import type { CreateBusinessInput } from '@/lib/validations/business';
 import { CompanyLogoDisplay } from '@/components/CompanyLogo';
 
-interface ViewCustomerDetailsProps {
-  customer: Customer;
+interface ViewBusinessDetailsProps {
+  business: Business;
   onBack: () => void;
   isUpdating: boolean;
   uploading: boolean;
   logoPreview: string | null;
   fileInputRef: RefObject<HTMLInputElement | null>;
-  form: UseFormReturn<CreateCustomerInput>;
+  form: UseFormReturn<CreateBusinessInput>;
   isDirty: boolean;
   onFileSelect: (event: ChangeEvent<HTMLInputElement>) => void;
   onRemoveLogo: () => void;
-  onSubmit: (data: CreateCustomerInput) => void;
+  onSubmit: (data: CreateBusinessInput) => void;
 }
 
-export const ViewCustomerDetails = ({
-  customer,
+export const ViewBusinessDetails = ({
+  business,
   onBack,
   isUpdating,
   uploading,
@@ -34,7 +34,7 @@ export const ViewCustomerDetails = ({
   onFileSelect,
   onRemoveLogo,
   onSubmit,
-}: ViewCustomerDetailsProps) => {
+}: ViewBusinessDetailsProps) => {
   return (
     <div className="bg-card border border-border rounded-lg p-6 md:p-8 mb-6">
       <div className="mb-6">
@@ -42,14 +42,14 @@ export const ViewCustomerDetails = ({
           Company details
         </h2>
         <p className="text-sm text-muted-foreground">
-          Fill in customer company details to get started
+          Fill in business company details to get started
         </p>
       </div>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CompanyLogoDisplay
-            photoUrl={customer.photo_url}
+            photoUrl={business.photo_url}
             isEditMode={true}
             uploading={uploading}
             logoPreview={logoPreview}
@@ -85,6 +85,23 @@ export const ViewCustomerDetails = ({
                 </label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Input {...field} className="pl-10" disabled={isUpdating} />
+                </div>
+                <FormMessage className="text-destructive text-xs opacity-80" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="phone_number"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Phone Number *
+                </label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input {...field} className="pl-10" disabled={isUpdating} />
                 </div>
                 <FormMessage className="text-destructive text-xs opacity-80" />

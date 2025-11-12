@@ -11,6 +11,9 @@ import { Dashboard } from '@/pages/Dashboard';
 import { CustomersPage } from '@/pages/Customers';
 import { CreateCustomerPage } from '@/pages/CreateCustomer';
 import { ViewCustomerPage } from '@/pages/ViewCustomer';
+import { BusinessesPage } from '@/pages/Businesses';
+import { CreateBusinessPage } from '@/pages/CreateBusiness';
+import { ViewBusinessPage } from '@/pages/ViewBusiness';
 
 export const routes: RouteObject[] = [
   {
@@ -57,8 +60,16 @@ export const routes: RouteObject[] = [
             element: <></>,
           },
           {
-            path: '/business',
-            element: <></>,
+            path: '/businesses',
+            element: <BusinessesPage />,
+          },
+          {
+            path: '/businesses/create',
+            element: <CreateBusinessPage />,
+          },
+          {
+            path: '/businesses/:id',
+            element: <ViewBusinessPage />,
           },
           {
             path: '/customers',

@@ -60,9 +60,9 @@ export const Sidebar = ({
       path: '/invoicing',
     },
     {
-      label: 'Manage Business',
+      label: 'Businesses',
       icon: <Building2 className="w-5 h-5" />,
-      path: '/business',
+      path: '/businesses',
     },
     {
       label: 'Customers',

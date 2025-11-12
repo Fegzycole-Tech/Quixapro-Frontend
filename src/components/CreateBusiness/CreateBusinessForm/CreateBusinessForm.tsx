@@ -1,6 +1,6 @@
 import { type UseFormReturn } from 'react-hook-form';
 import { type RefObject, type ChangeEvent } from 'react';
-import { Building2, Mail, MapPin } from 'lucide-react';
+import { Building2, Mail, MapPin, Phone } from 'lucide-react';
 import {
   Form,
   FormControl,
@@ -11,22 +11,22 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import type { CreateCustomerInput } from '@/lib/validations/customer';
+import type { CreateBusinessInput } from '@/lib/validations/business';
 import { CompanyLogoUpload } from '@/components/CompanyLogo';
 
-interface CreateCustomerFormProps {
-  form: UseFormReturn<CreateCustomerInput>;
+interface CreateBusinessFormProps {
+  form: UseFormReturn<CreateBusinessInput>;
   logoPreview: string | null;
   uploading: boolean;
   isPending: boolean;
   fileInputRef: RefObject<HTMLInputElement | null>;
   onFileSelect: (event: ChangeEvent<HTMLInputElement>) => void;
   onRemoveLogo: () => void;
-  onSubmit: (data: CreateCustomerInput) => void;
+  onSubmit: (data: CreateBusinessInput) => void;
   onBack: () => void;
 }
 
-export const CreateCustomerForm = ({
+export const CreateBusinessForm = ({
   form,
   logoPreview,
   uploading,
@@ -36,7 +36,7 @@ export const CreateCustomerForm = ({
   onRemoveLogo,
   onSubmit,
   onBack,
-}: CreateCustomerFormProps) => {
+}: CreateBusinessFormProps) => {
   return (
     <div className="bg-card border border-border rounded-lg p-6 md:p-8">
       <div className="mb-6">
@@ -44,7 +44,7 @@ export const CreateCustomerForm = ({
           Company details
         </h2>
         <p className="text-sm text-muted-foreground">
-          Fill in customer company details to get started
+          Fill in business company details to get started
         </p>
       </div>
 
@@ -101,6 +101,27 @@ export const CreateCustomerForm = ({
 
           <FormField
             control={form.control}
+            name="phone_number"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Phone Number <span className="text-destructive">*</span>
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="tel"
+                    placeholder="+1-555-0100"
+                    leftIcon={<Phone className="w-4 h-4" />}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-destructive text-xs opacity-80" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="address"
             render={({ field }) => (
               <FormItem>
@@ -134,7 +155,7 @@ export const CreateCustomerForm = ({
               loading={isPending}
               className="flex-1"
             >
-              Save Customer
+              Save Business
             </Button>
           </div>
         </form>
